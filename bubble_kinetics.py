@@ -53,9 +53,10 @@ sigmal = 0
 #%% Program Starts here
 '''
 
-
-#%% data for rate of temperature change
 number = int(1E4)
+dt = 1E-2
+#%% data for rate of temperature change
+
 T = np.zeros(number)
 Db = np.zeros(number)
 A = np.zeros(number)
@@ -64,16 +65,51 @@ Tb = 1154.1 # Boiling point of sodium in kelvine
 Ts = 800 # sodium pool temperature
 cp = 1284.4 #kJ/kg
 
-A[i] = 3.14*Db[i] #surface area of bubble
+
 
 
 #%% Data for change in velocity
 
 v = np.zeros(number) #bubble rising velocity m/s
+t = np.zeros(number)
+x = np.zeros(number)
 rhol = np.zeros(number)
+rhog = np.zeros(number)
+
+
+#%% Data for bubble
+
+Pb = np.zeros(number)
+k = 1.380648813131313131E-23 #Boltzman constant J/K
+g = 9.8 # gravitational acceleration
+P0 = 1E5 # Atmosperic pressure 1 bar = 1E5 pascals
+H = 13
+
+#%% Input Parameter Needed
+
+N = 1E25
+Db[0]
+Pb[0]
 
 
 
+
+
+for i in range(number-1):
+
+    t[i] = i*dt
+
+    T[i+1] = T[i] + dt* (mass_of_vap_sod*cp*(Tb-Ts)-h*3.14*Db[i]**2 * (T[i]-Ts))
+
+    rhol[i+1] =
+
+    v[i+1] = v[i] + dt*(6/(rhol[i]*3.14*Db[i]**3))*(  (3.14*Db**3 *g*(rhol[i]-rhog[i]))/6 - 12*3.14*Db[i]*v[i])
+
+    x[i+1] = t[i+1]*v[i+1]
+
+    Pb[i+1] = P0 + rhol[i+1]*g*(H-x[i+1])
+
+    Db[i+1] = N*k*T[i+1]/(3.14*Pb[i])
 
 
 
